@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Matriz Interativa de Ameacas a Sistemas de Inteligencia Artificial | TAVARDT Portugal</title>
+  <meta name="description" content="Matriz interativa de ameacas e guia de mitigacao para modelos de linguagem e agentes de IA. Conforme normas OWASP LLM e MITRE ATLAS.">
+  <style>
+    :root {
+      --bg: #060913;
+      --card-bg: #0e1726;
+      --card-border: #1e293b;
+      --accent: #38bdf8;
+      --accent-hover: #0284c7;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --pass: #10b981;
+      --warn: #f59e0b;
+      --fail: #ef4444;
+      --info: #818cf8;
+      --code-bg: #020617;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+    header {
+      background-color: #0b1120;
+      border-bottom: 1px solid var(--card-border);
+      padding: 1.25rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    .brand-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: #fff;
+    }
+    .brand-sub {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+    .nav-links a {
+      color: #cbd5e1;
+      text-decoration: none;
+      font-size: 0.875rem;
+      margin-left: 1.5rem;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--accent); }
+    .container {
+      max-width: 1100px;
+      margin: 2.5rem auto;
+      padding: 0 1.5rem;
+    }
+    .hero {
+      text-align: center;
+      margin-bottom: 2.5rem;
+    }
+    .hero h1 {
+      font-size: 2.1rem;
+      font-weight: 800;
+      margin-bottom: 0.75rem;
+      color: #fff;
+      line-height: 1.25;
+    }
+    .hero p {
+      font-size: 1.05rem;
+      color: var(--text-muted);
+      max-width: 820px;
+      margin: 0 auto 1.5rem auto;
+    }
+    .badge-bar {
+      display: flex;
+      justify-content: center;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+    .badge {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      font-weight: 700;
+      padding: 0.35rem 0.75rem;
+      border-radius: 9999px;
+      background-color: rgba(56, 189, 248, 0.15);
+      color: var(--accent);
+      border: 1px solid rgba(56, 189, 248, 0.3);
+    }
+    .card {
+      background-color: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 1.75rem;
+      margin-bottom: 2rem;
+    }
+    .card-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      color: #fff;
+    }
+    .card-desc {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      margin-bottom: 1.25rem;
+    }
+    .arch-select-row {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+      flex-wrap: wrap;
+    }
+    .arch-btn {
+      flex: 1;
+      min-width: 200px;
+      background-color: #0b1120;
+      border: 1px solid var(--card-border);
+      border-radius: 8px;
+      padding: 1rem;
+      cursor: pointer;
+      text-align: left;
+      transition: all 0.2s;
+    }
+    .arch-btn:hover {
+      border-color: var(--accent);
+    }
+    .arch-btn.active {
+      border-color: var(--accent);
+      background-color: rgba(56, 189, 248, 0.1);
+    }
+    .arch-name {
+      font-weight: 700;
+      font-size: 0.95rem;
+      color: #fff;
+      margin-bottom: 0.25rem;
+    }
+    .arch-sub {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+    .stat-card {
+      background-color: #0b1120;
+      border: 1px solid var(--card-border);
+      border-radius: 8px;
+      padding: 1.25rem;
+      text-align: center;
+    }
+    .stat-val {
+      font-size: 2rem;
+      font-weight: 800;
+      line-height: 1.2;
+      margin-bottom: 0.35rem;
+    }
+    .stat-label {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-muted);
+    }
+    .threat-item {
+      background-color: #0b1120;
+      border: 1px solid var(--card-border);
+      border-radius: 8px;
+      padding: 1.25rem;
+      margin-bottom: 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    .threat-info {
+      flex: 1;
+      min-width: 280px;
+    }
+    .threat-code {
+      display: inline-block;
+      font-family: monospace;
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 0.2rem 0.5rem;
+      border-radius: 4px;
+      background: rgba(56, 189, 248, 0.15);
+      color: var(--accent);
+      margin-bottom: 0.35rem;
+    }
+    .threat-title {
+      font-size: 1rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 0.25rem;
+    }
+    .threat-desc {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+    .status-group {
+      display: flex;
+      gap: 0.5rem;
+    }
+    .btn-status {
+      padding: 0.45rem 0.85rem;
+      font-size: 0.78rem;
+      font-weight: 700;
+      border-radius: 6px;
+      border: 1px solid #334155;
+      background: #1e293b;
+      color: #94a3b8;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn-status.active-defended {
+      background: rgba(16, 185, 129, 0.2);
+      border-color: var(--pass);
+      color: #6ee7b7;
+    }
+    .btn-status.active-partial {
+      background: rgba(245, 158, 11, 0.2);
+      border-color: var(--warn);
+      color: #fde68a;
+    }
+    .btn-status.active-exposed {
+      background: rgba(239, 68, 68, 0.2);
+      border-color: var(--fail);
+      color: #fca5a5;
+    }
+    .action-row {
+      display: flex;
+      gap: 1rem;
+      margin-top: 1.5rem;
+      flex-wrap: wrap;
+    }
+    .btn-primary {
+      background-color: var(--accent);
+      color: #04101c;
+      border: none;
+      padding: 0.85rem 1.75rem;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
+    .btn-primary:hover {
+      background-color: var(--accent-hover);
+    }
+    .btn-secondary {
+      background-color: #1e293b;
+      color: #cbd5e1;
+      border: 1px solid #334155;
+      padding: 0.85rem 1.5rem;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn-secondary:hover {
+      background-color: #334155;
+      color: #fff;
+    }
+    .blueprint-output {
+      width: 100%;
+      height: 260px;
+      background-color: var(--code-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 8px;
+      color: #6ee7b7;
+      font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+      font-size: 0.88rem;
+      padding: 1rem;
+      resize: vertical;
+      margin-top: 1rem;
+      line-height: 1.45;
+    }
+    footer {
+      border-top: 1px solid var(--card-border);
+      padding: 2.5rem 1.5rem;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      background-color: #0b1120;
+      margin-top: 4rem;
+    }
+    footer a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+    footer a:hover { text-decoration: underline; }
+    .privacy-notice {
+      max-width: 700px;
+      margin: 0.75rem auto;
+      font-size: 0.8rem;
+      color: #64748b;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div>
+      <div class="brand-title">TAVARDT Portugal</div>
+      <div class="brand-sub">Interactive AI Threat Matrix & Hardening Blueprint</div>
+    </div>
+    <div class="nav-links">
+      <a href="https://ag.tavardt.com/pt/" target="_blank" rel="noopener">Portal Principal</a>
+      <a href="https://tools.tavardt.com/pt/" target="_blank" rel="noopener">Ferramentas de Ciberseguranca</a>
+      <a href="https://ag.tavardt.com/pt/contato/" target="_blank" rel="noopener">Contato Tecnico</a>
+    </div>
+  </header>
+
+  <div class="container">
+    <div class="hero">
+      <h1>Matriz Interativa de Ameacas a Sistemas de Inteligencia Artificial</h1>
+      <p>Mapeamento tecnico de vetores de ataque em aplicacoes com Modelos de Linguagem (LLMs) e agentes autonomos. Avaliacao de postura defensiva sob OWASP Top 10 for LLMs e MITRE ATLAS com geracao automatica de blueprint de mitigacao.</p>
+      <div class="badge-bar">
+        <span class="badge">100% No Navegador (Zero Servidor)</span>
+        <span class="badge">OWASP Top 10 LLM & MITRE ATLAS</span>
+        <span class="badge">Diagnostico de Postura Zero-Trust</span>
+        <span class="badge">Gerador de Blueprint de Blindagem</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">1. Selecione a Arquitetura da sua Solucao de IA</div>
+      <div class="card-desc">O perfil arquitetural calibra os pesos de risco e as diretrizes recomendadas de mitigacao:</div>
+      <div class="arch-select-row" id="arch-selector">
+        <button class="arch-btn active" data-arch="agent">
+          <div class="arch-name">Agente Autonomo com Tools</div>
+          <div class="arch-sub">Execucao de funcoes, ferramentas MCP e acesso a APIs</div>
+        </button>
+        <button class="arch-btn" data-arch="rag">
+          <div class="arch-name">Sistema RAG</div>
+          <div class="arch-sub">Recuperacao aumentada por pesquisa vetorial e base de conhecimento</div>
+        </button>
+        <button class="arch-btn" data-arch="chat">
+          <div class="arch-name">Assistente / Chatbot</div>
+          <div class="arch-sub">Interacao conversacional direta com utilizadores finais</div>
+        </button>
+        <button class="arch-btn" data-arch="api">
+          <div class="arch-name">API de Modelo Dedicado</div>
+          <div class="arch-sub">Endpoints internos fine-tuned ou integracoes corporativas</div>
+        </button>
+      </div>
+
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-val" id="stat-score" style="color: var(--fail);">25</div>
+          <div class="stat-label">Indice de Blindagem</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-val" id="stat-posture" style="color: var(--fail); font-size: 1.35rem;">VULNERABLE</div>
+          <div class="stat-label">Postura de Seguranca</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-val" id="stat-defended" style="color: var(--pass);">2 / 10</div>
+          <div class="stat-label">Controlos Ativos</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-val" id="stat-exposed" style="color: var(--fail);">8 / 10</div>
+          <div class="stat-label">Vetores Vulneraveis</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">2. Matriz de Avaliacao dos 10 Vetores Criticos de Risco (OWASP)</div>
+      <div class="card-desc">Defina o nivel atual de maturidade defensiva da sua aplicacao para cada vetor:</div>
+      <div id="threat-list"></div>
+
+      <div class="action-row">
+        <button class="btn-primary" id="btn-generate-blueprint">Gerar Blueprint de Blindagem (Markdown)</button>
+        <button class="btn-secondary" id="btn-export-matrix">Exportar Matriz em JSON</button>
+      </div>
+    </div>
+
+    <div class="card" id="blueprint-card" style="display:none;">
+      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem;">
+        <div>
+          <div class="card-title" style="margin-bottom:0.25rem;">Blueprint de Blindagem Arquitetural</div>
+          <div class="card-desc" style="margin-bottom:0;">Especificacao tecnica pronta para documentacao de conformidade, revisao de seguranca e homologacao de producao:</div>
+        </div>
+        <div>
+          <button class="btn-secondary" id="btn-copy-bp" style="margin-left:0; padding:0.5rem 1rem; font-size:0.85rem;">Copiar Blueprint</button>
+          <button class="btn-secondary" id="btn-dl-bp" style="margin-left:0.5rem; padding:0.5rem 1rem; font-size:0.85rem;">Descarregar ai-hardening-blueprint.md</button>
+        </div>
+      </div>
+      <textarea id="blueprint-area" class="blueprint-output" readonly></textarea>
+    </div>
+  </div>
+
+  <footer>
+    <div>TAVARDT Portugal &copy; 2026. Todos os direitos reservados.</div>
+    <div class="privacy-notice">
+      Seguranca por Concecao: O processamento desta ferramenta e efetuado 100% no motor JavaScript do seu navegador. Nenhuma informacao arquitetural ou dado de configuracao e enviado para servidores externos.
+    </div>
+  </footer>
+
+  <script>
+    (function() {
+      const i18n = {"t_01_t": "Injecao de Prompts (Direta e Indireta)", "t_01_d": "Manipulacao de instrucoes do modelo via entradas maliciosas ou contexto externo.", "t_02_t": "Divulgacao de Informacoes Sensiveis", "t_02_d": "Fuga inadvertida de dados confidenciais ou segredos nas respostas.", "t_03_t": "Vulnerabilidades na Cadeia de Fornecimento", "t_03_d": "Dependencias desatualizadas, plugins vulneraveis ou modelos sem procedencia comprovada.", "t_04_t": "Envenenamento de Dados e Modelos", "t_04_d": "Corrupcao de conjuntos de treino para induzir comportamentos incorretos.", "t_05_t": "Tratamento Inadequado de Saidas", "t_05_d": "Execucao sem validacao de saidas do LLM por interpretadores de codigo ou bases de dados.", "t_06_t": "Excessiva Concessao de Autonomia", "t_06_d": "Agentes dotados de extensoes e permissoes de sistema sem supervisao.", "t_07_t": "Fuga do Prompt de Sistema", "t_07_d": "Extracao de regras de negocio e instrucoes confidenciais do prompt base.", "t_08_t": "Fragilidades em Embeddings e Vetores", "t_08_d": "Injecao de documentos forjados no corpus do RAG para desviar respostas.", "t_09_t": "Alucinacao e Desinformacao Critica", "t_09_d": "Geracao de afirmacoes incorretas em fluxos criticos de decisao.", "t_10_t": "Consumo Ilimitado de Recursos", "t_10_d": "Esgotamento de recursos computacionais ou custos descontrolados de tokens.", "btn_defended": "Protegido", "btn_partial": "Parcial", "btn_exposed": "Vulneravel", "p_hardened": "BLINDADO", "p_developing": "EM DESENVOLVIMENTO", "p_vulnerable": "VULNERAVEL", "msg_copied": "Blueprint de blindagem copiado com sucesso para a area de transferencia."};
+
+      const threats = [
+        { id: "LLM01", code: "OWASP-LLM01", title: i18n.t_01_t, desc: i18n.t_01_d, weight: 15, defaultState: "exposed" },
+        { id: "LLM02", code: "OWASP-LLM02", title: i18n.t_02_t, desc: i18n.t_02_d, weight: 12, defaultState: "partial" },
+        { id: "LLM03", code: "OWASP-LLM03", title: i18n.t_03_t, desc: i18n.t_03_d, weight: 10, defaultState: "exposed" },
+        { id: "LLM04", code: "OWASP-LLM04", title: i18n.t_04_t, desc: i18n.t_04_d, weight: 10, defaultState: "exposed" },
+        { id: "LLM05", code: "OWASP-LLM05", title: i18n.t_05_t, desc: i18n.t_05_d, weight: 12, defaultState: "exposed" },
+        { id: "LLM06", code: "OWASP-LLM06", title: i18n.t_06_t, desc: i18n.t_06_d, weight: 14, defaultState: "exposed" },
+        { id: "LLM07", code: "OWASP-LLM07", title: i18n.t_07_t, desc: i18n.t_07_d, weight: 8,  defaultState: "defended" },
+        { id: "LLM08", code: "OWASP-LLM08", title: i18n.t_08_t, desc: i18n.t_08_d, weight: 7,  defaultState: "partial" },
+        { id: "LLM09", code: "OWASP-LLM09", title: i18n.t_09_t, desc: i18n.t_09_d, weight: 6,  defaultState: "defended" },
+        { id: "LLM10", code: "OWASP-LLM10", title: i18n.t_10_t, desc: i18n.t_10_d, weight: 6,  defaultState: "exposed" }
+      ];
+
+      let selectedArch = "agent";
+      let threatStates = {};
+
+      threats.forEach(t => {
+        threatStates[t.id] = t.defaultState;
+      });
+
+      const threatList = document.getElementById("threat-list");
+      const statScore = document.getElementById("stat-score");
+      const statPosture = document.getElementById("stat-posture");
+      const statDefended = document.getElementById("stat-defended");
+      const statExposed = document.getElementById("stat-exposed");
+      const blueprintCard = document.getElementById("blueprint-card");
+      const blueprintArea = document.getElementById("blueprint-area");
+
+      function recalculate() {
+        let totalScore = 0;
+        let defCount = 0;
+        let expCount = 0;
+
+        threats.forEach(t => {
+          const st = threatStates[t.id];
+          if (st === "defended") {
+            totalScore += t.weight;
+            defCount++;
+          } else if (st === "partial") {
+            totalScore += (t.weight * 0.5);
+          } else {
+            expCount++;
+          }
+        });
+
+        const scoreRounded = Math.round(totalScore);
+        statScore.textContent = scoreRounded + " / 100";
+        statDefended.textContent = defCount + " / 10";
+        statExposed.textContent = expCount + " / 10";
+
+        if (scoreRounded >= 85) {
+          statScore.style.color = "var(--pass)";
+          statPosture.style.color = "var(--pass)";
+          statPosture.textContent = i18n.p_hardened;
+        } else if (scoreRounded >= 60) {
+          statScore.style.color = "var(--warn)";
+          statPosture.style.color = "var(--warn)";
+          statPosture.textContent = i18n.p_developing;
+        } else {
+          statScore.style.color = "var(--fail)";
+          statPosture.style.color = "var(--fail)";
+          statPosture.textContent = i18n.p_vulnerable;
+        }
+      }
+
+      function renderThreats() {
+        threatList.innerHTML = "";
+        threats.forEach(t => {
+          const item = document.createElement("div");
+          item.className = "threat-item";
+
+          const curState = threatStates[t.id];
+
+          item.innerHTML = `
+            <div class="threat-info">
+              <span class="threat-code">${t.code} (${t.weight} pts)</span>
+              <div class="threat-title">${t.title}</div>
+              <div class="threat-desc">${t.desc}</div>
+            </div>
+            <div class="status-group">
+              <button class="btn-status ${curState === 'defended' ? 'active-defended' : ''}" data-tid="${t.id}" data-val="defended">${i18n.btn_defended}</button>
+              <button class="btn-status ${curState === 'partial' ? 'active-partial' : ''}" data-tid="${t.id}" data-val="partial">${i18n.btn_partial}</button>
+              <button class="btn-status ${curState === 'exposed' ? 'active-exposed' : ''}" data-tid="${t.id}" data-val="exposed">${i18n.btn_exposed}</button>
+            </div>
+          `;
+          threatList.appendChild(item);
+        });
+
+        // Attach event listeners
+        document.querySelectorAll(".btn-status").forEach(btn => {
+          btn.addEventListener("click", function() {
+            const tid = this.getAttribute("data-tid");
+            const val = this.getAttribute("data-val");
+            threatStates[tid] = val;
+            renderThreats();
+            recalculate();
+          });
+        });
+      }
+
+      // Architecture selection buttons
+      document.querySelectorAll(".arch-btn").forEach(btn => {
+        btn.addEventListener("click", function() {
+          document.querySelectorAll(".arch-btn").forEach(b => b.classList.remove("active"));
+          this.classList.add("active");
+          selectedArch = this.getAttribute("data-arch");
+        });
+      });
+
+      // Generate Blueprint
+      document.getElementById("btn-generate-blueprint").addEventListener("click", function() {
+        const ts = new Date().toISOString().replace("T", " ").substring(0, 19);
+        let bp = `# AI Security Hardening Blueprint\n\n`;
+        bp += `- **Organization**: TAVARDT Portugal\n`;
+        bp += `- **Date**: ${ts} UTC\n`;
+        bp += `- **Architecture**: ${selectedArch.toUpperCase()}\n`;
+        bp += `- **Standard**: Referenciais Europeus de Ciberseguranca em IA e OWASP LLM\n`;
+        bp += `- **Score**: ${statScore.textContent}\n`;
+        bp += `- **Posture**: ${statPosture.textContent}\n\n`;
+
+        bp += `## Executive Mitigation Roadmap\n\n`;
+
+        threats.forEach(t => {
+          const st = threatStates[t.id];
+          bp += `### [${t.code}] ${t.title} - Status: ${st.toUpperCase()}\n`;
+          if (st === "exposed") {
+            bp += `- **Deficiency**: Unmitigated exposure. Immediate control implementation required.\n`;
+            bp += `- **Mandatory Action**: Implement strict heuristic input/output guards, context sandboxing, and execution whitelists.\n\n`;
+          } else if (st === "partial") {
+            bp += `- **Deficiency**: Partial mitigation. Residual risk present.\n`;
+            bp += `- **Mandatory Action**: Enforce secondary verification and automated regression test coverage.\n\n`;
+          } else {
+            bp += `- **Status**: Documented active defense in place. Maintain ongoing audit logs.\n\n`;
+          }
+        });
+
+        bp += `## Architecture-Specific Defensive Directive\n\n`;
+        if (selectedArch === "agent") {
+          bp += `For autonomous agents executing external tools (MCP):\n`;
+          bp += `1. Restrict filesystem mount scopes to dedicated sandboxes.\n`;
+          bp += `2. Forbid direct shell invocations without containerization.\n`;
+          bp += `3. Require human-in-the-loop confirmation on destructive actions.\n`;
+        } else if (selectedArch === "rag") {
+          bp += `For Retrieval-Augmented Generation systems:\n`;
+          bp += `1. Enforce strict isolation between prompt commands and retrieved context passages.\n`;
+          bp += `2. Sanitize and validate embedding sources against poisoning.\n`;
+          bp += `3. Mask PII and sensitive tokens before indexation.\n`;
+        } else {
+          bp += `For general conversational and API deployments:\n`;
+          bp += `1. Implement bi-directional guardrails on prompt ingress and LLM egress.\n`;
+          bp += `2. Cap token consumption and rate-limit IP endpoints.\n`;
+        }
+
+        blueprintArea.value = bp;
+        blueprintCard.style.display = "block";
+        blueprintCard.scrollIntoView({ behavior: "smooth" });
+      });
+
+      document.getElementById("btn-copy-bp").addEventListener("click", function() {
+        if (!blueprintArea.value) return;
+        navigator.clipboard.writeText(blueprintArea.value).then(function() {
+          alert(i18n.msg_copied);
+        });
+      });
+
+      document.getElementById("btn-dl-bp").addEventListener("click", function() {
+        if (!blueprintArea.value) return;
+        const blob = new Blob([blueprintArea.value], { type: "text/markdown" });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = "ai-hardening-blueprint.md";
+        a.click();
+        URL.revokeObjectURL(url);
+      });
+
+      document.getElementById("btn-export-matrix").addEventListener("click", function() {
+        const payload = {
+          organization: "TAVARDT Portugal",
+          architecture: selectedArch,
+          threat_states: threatStates,
+          score: statScore.textContent,
+          posture: statPosture.textContent,
+          exported_at: new Date().toISOString()
+        };
+        const blob = new Blob([JSON.stringify(payload, null, 2)], { type: "application/json" });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = "ai-threat-matrix.json";
+        a.click();
+        URL.revokeObjectURL(url);
+      });
+
+      // Initial render
+      renderThreats();
+      recalculate();
+
+    })();
+  </script>
+</body>
+</html>
