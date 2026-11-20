@@ -2,10 +2,10 @@
 # -*- coding: utf-8 -*-
 """
 TAVARDT Portugal
-Matriz Interativa de Ameacas a Sistemas de Inteligencia Artificial
-Matriz interativa de ameacas e guia de mitigacao para modelos de linguagem e agentes de IA. Conforme normas OWASP LLM e MITRE ATLAS.
+Matriz Interativa de Ameaças a Sistemas de Inteligência Artificial
+Matriz interativa de ameaças e guia de mitigação para modelos de linguagem e agentes de IA. Conforme normas OWASP LLM e MITRE ATLAS.
 
-Standard: Referenciais Europeus de Ciberseguranca em IA e OWASP LLM
+Standard: OWASP Top 10 for LLM Applications e MITRE ATLAS
 Repository: https://github.com/TAVARDT-Portugal/ai-threat-matrix-pt
 Online Web App: https://tavardt-portugal.github.io/ai-threat-matrix-pt/
 """
@@ -17,15 +17,15 @@ import argparse
 from datetime import datetime
 
 THREAT_DEFINITIONS = [
-    {"id": "LLM01", "code": "OWASP-LLM01", "title": "Injecao de Prompts (Direta e Indireta)", "weight": 15, "default": "exposed"},
-    {"id": "LLM02", "code": "OWASP-LLM02", "title": "Divulgacao de Informacoes Sensiveis", "weight": 12, "default": "partial"},
+    {"id": "LLM01", "code": "OWASP-LLM01", "title": "Injeção de Prompts (Direta e Indireta)", "weight": 15, "default": "exposed"},
+    {"id": "LLM02", "code": "OWASP-LLM02", "title": "Divulgação de Informações Sensíveis", "weight": 12, "default": "partial"},
     {"id": "LLM03", "code": "OWASP-LLM03", "title": "Vulnerabilidades na Cadeia de Fornecimento", "weight": 10, "default": "exposed"},
     {"id": "LLM04", "code": "OWASP-LLM04", "title": "Envenenamento de Dados e Modelos", "weight": 10, "default": "exposed"},
-    {"id": "LLM05", "code": "OWASP-LLM05", "title": "Tratamento Inadequado de Saidas", "weight": 12, "default": "exposed"},
-    {"id": "LLM06", "code": "OWASP-LLM06", "title": "Excessiva Concessao de Autonomia", "weight": 14, "default": "exposed"},
+    {"id": "LLM05", "code": "OWASP-LLM05", "title": "Tratamento Inadequado de Saídas", "weight": 12, "default": "exposed"},
+    {"id": "LLM06", "code": "OWASP-LLM06", "title": "Excessiva Concessão de Autonomia", "weight": 14, "default": "exposed"},
     {"id": "LLM07", "code": "OWASP-LLM07", "title": "Fuga do Prompt de Sistema", "weight": 8,  "default": "defended"},
     {"id": "LLM08", "code": "OWASP-LLM08", "title": "Fragilidades em Embeddings e Vetores", "weight": 7,  "default": "partial"},
-    {"id": "LLM09", "code": "OWASP-LLM09", "title": "Alucinacao e Desinformacao Critica", "weight": 6,  "default": "defended"},
+    {"id": "LLM09", "code": "OWASP-LLM09", "title": "Alucinação e Desinformação Crítica", "weight": 6,  "default": "defended"},
     {"id": "LLM10", "code": "OWASP-LLM10", "title": "Consumo Ilimitado de Recursos", "weight": 6,  "default": "exposed"}
 ]
 
@@ -61,7 +61,7 @@ def evaluate_posture(arch, profile_states):
     elif score >= 60:
         posture = "EM DESENVOLVIMENTO"
     else:
-        posture = "VULNERAVEL"
+        posture = "VULNERÁVEL"
 
     return {
         "architecture": arch,
@@ -79,7 +79,7 @@ def generate_blueprint_md(evaluation):
     md.append(f"- **Organization**: TAVARDT Portugal")
     md.append(f"- **Evaluation Date**: {ts} UTC")
     md.append(f"- **Architecture Profile**: {evaluation['architecture'].upper()}")
-    md.append(f"- **Compliance Standard**: Referenciais Europeus de Ciberseguranca em IA e OWASP LLM")
+    md.append(f"- **Compliance Standard**: OWASP Top 10 for LLM Applications e MITRE ATLAS")
     md.append(f"- **Hardening Score**: {evaluation['score']} / 100")
     md.append(f"- **Defensive Posture**: {evaluation['posture']}")
     md.append("")
@@ -99,11 +99,11 @@ def generate_blueprint_md(evaluation):
     return "\n".join(md)
 
 def main():
-    parser = argparse.ArgumentParser(description="Avaliador de Postura de Seguranca em Inteligencia Artificial e Gerador de Blueprint.")
-    parser.add_argument("--arch", choices=["agent", "rag", "chat", "api"], default="agent", help="Perfil arquitetural da solucao (agent, rag, chat, api)")
+    parser = argparse.ArgumentParser(description="Avaliador de Postura de Segurança em Inteligência Artificial e Gerador de Blueprint.")
+    parser.add_argument("--arch", choices=["agent", "rag", "chat", "api"], default="agent", help="Perfil arquitetural da solução (agent, rag, chat, api)")
     parser.add_argument("--profile", help="Caminho para ficheiro JSON com estados dos controlos defensivos")
-    parser.add_argument("--export-blueprint", help="Exportar blueprint de mitigacao para ficheiro Markdown")
-    parser.add_argument("--strict", action="store_true", help="Falhar com codigo 1 perante qualquer vetor vulneravel")
+    parser.add_argument("--export-blueprint", help="Exportar blueprint de mitigação para ficheiro Markdown")
+    parser.add_argument("--strict", action="store_true", help="Falhar com código 1 perante qualquer vetor vulnerável")
     parser.add_argument("--json", action="store_true", help="Apresentar resultado em formato JSON estruturado")
 
     args = parser.parse_args()
@@ -128,14 +128,14 @@ def main():
         bp_content = generate_blueprint_md(eval_res)
         with open(args.export_blueprint, "w", encoding="utf-8") as bf:
             bf.write(bp_content)
-        print(f"Blueprint de mitigacao guardado com sucesso em: {args.export_blueprint}")
+        print(f"Blueprint de mitigação guardado com sucesso em: {args.export_blueprint}")
 
     if args.json:
         print(json.dumps(eval_res, indent=2, ensure_ascii=False))
     else:
         print("=" * 64)
-        print(f"MATRIZ DE AMEACAS A IA: TAVARDT Portugal")
-        print(f"Standard: Referenciais Europeus de Ciberseguranca em IA e OWASP LLM")
+        print(f"MATRIZ DE AMEAÇAS A IA: TAVARDT Portugal")
+        print(f"Standard: OWASP Top 10 for LLM Applications e MITRE ATLAS")
         print(f"Architecture: {eval_res['architecture'].upper()}")
         print(f"Hardening Score: {eval_res['score']} / 100")
         print(f"Defensive Posture: {eval_res['posture']}")
