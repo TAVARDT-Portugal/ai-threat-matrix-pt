@@ -2,16 +2,16 @@
 
 <html lang="pt-PT">
 <head>
-<!-- Preconnect to Google Tag Manager for Maximum Performance -->
+
 <link href="https://www.googletagmanager.com" rel="preconnect"/>
 <link href="https://www.googletagmanager.com" rel="dns-prefetch"/>
-<!-- Google Tag Manager -->
+
 <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
   new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
   j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
   })(window,document,'script','dataLayer','GTM-5B6QSTN5');</script>
-<!-- End Google Tag Manager -->
+
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>Matriz Interativa de Ameaças a Sistemas de Inteligência Artificial | TAVARDT Portugal</title>
@@ -46,8 +46,7 @@
 <meta content="Matriz Interativa de Ameaças a Sistemas de Inteligência Artificial | TAVARDT Portugal" name="twitter:title"/>
 <meta content="Matriz interativa de ameaças e guia de mitigação para modelos de linguagem e agentes de IA. Conforme normas OWASP LLM e MITRE ATLAS." name="twitter:description"/>
 <meta content="https://tavardt-portugal.github.io/ai-threat-matrix-pt/og-image.jpg" name="twitter:image"/>
-<script type="application/ld+json">
-{
+<script type="application/ld+json">{
   "@context": "https://schema.org",
   "@graph": [
     {
@@ -71,8 +70,36 @@
         "logo": {
           "@type": "ImageObject",
           "url": "https://tavardt-portugal.github.io/ai-threat-matrix-pt/favicon.ico"
-        }
-      }
+        },
+        "sameAs": [
+          "https://ag.tavardt.com/br/",
+          "https://ag.tavardt.com/pt/",
+          "https://ag.tavardt.com/",
+          "https://ag.tavardt.com/uk/",
+          "https://ag.tavardt.com/ca/",
+          "https://ag.tavardt.com/au/",
+          "https://ag.tavardt.com/nz/",
+          "https://ag.tavardt.com/es/",
+          "https://ag.tavardt.com/mx/",
+          "https://ag.tavardt.com/fr/",
+          "https://ag.tavardt.com/it/",
+          "https://tools.tavardt.com/",
+          "https://github.com/TAVARDT-Portugal"
+        ]
+      },
+      "sameAs": [
+        "https://tavardt-brasil.github.io/ai-threat-matrix-br/",
+        "https://tavardt-portugal.github.io/ai-threat-matrix-pt/",
+        "https://tavardt-usa.github.io/ai-threat-matrix-us/",
+        "https://tavardt-uk.github.io/ai-threat-matrix-uk/",
+        "https://tavardt-canada.github.io/ai-threat-matrix-ca/",
+        "https://tavardt-australia.github.io/ai-threat-matrix-au/",
+        "https://tavardt-new-zealand.github.io/ai-threat-matrix-nz/",
+        "https://tavardt-espana.github.io/ai-threat-matrix-es/",
+        "https://tavardt-mexico.github.io/ai-threat-matrix-mx/",
+        "https://tavardt-france.github.io/ai-threat-matrix-fr/",
+        "https://tavardt-italia.github.io/ai-threat-matrix-it/"
+      ]
     },
     {
       "@type": "BreadcrumbList",
@@ -87,7 +114,7 @@
         {
           "@type": "ListItem",
           "position": 2,
-          "name": "Central de Ferramentas",
+          "name": "Ferramentas",
           "item": "https://tools.tavardt.com/pt/"
         },
         {
@@ -145,8 +172,7 @@
       ]
     }
   ]
-}
-  </script>
+}</script>
 <style>
     :root {
       --bg: #060913;
@@ -1499,12 +1525,22 @@ header.tavardt-header, header {
 .tavardt-brand-dot {
   color: #1e00ff !important;
 }
-.tavardt-footer, .tavardt-footer-inner, .tavardt-footer-col, .tavardt-footer-bottom, footer, footer div {
+/* TAVARDT Footer Alignment: Content Left-Aligned, ONLY Copyright Centered */
+.tavardt-footer,
+.tavardt-footer-inner,
+.tavardt-footer-col,
+.tavardt-footer-mission,
+.tavardt-footer-heading,
+.tavardt-footer-links,
+.tavardt-footer-compliance-text,
+footer {
   text-align: left !important;
 }
-.tavardt-footer-bottom p {
-  text-align: left !important;
-  margin: 0 !important;
+.tavardt-footer-bottom,
+.tavardt-footer-bottom p,
+footer > div:first-child {
+  text-align: center !important;
+  margin: 0 auto !important;
 }
 @media (max-width: 640px) {
   .tavardt-header-inner {
@@ -1522,19 +1558,17 @@ header.tavardt-header, header {
 </style>
 </head>
 <body>
-<!-- Google Tag Manager (noscript) -->
+
 <noscript><iframe height="0" src="https://www.googletagmanager.com/ns.html?id=GTM-5B6QSTN5" style="display:none;visibility:hidden" width="0"></iframe></noscript>
-<!-- End Google Tag Manager (noscript) -->
+
 <header class="tavardt-header">
 <div class="tavardt-header-inner">
 <a class="tavardt-brand" href="https://ag.tavardt.com/pt/" rel="noopener" target="_blank">
 <span class="tavardt-logo-text">TAVARDT<span class="tavardt-brand-dot">.</span></span>
-
 </a>
 <nav class="tavardt-nav">
 <a class="tavardt-nav-link" href="https://ag.tavardt.com/pt/" rel="noopener" target="_blank">Portal</a>
 <a class="tavardt-nav-link" href="https://tools.tavardt.com/pt/" rel="noopener" target="_blank">Ferramentas</a>
-
 </nav>
 </div>
 </header>
@@ -1543,7 +1577,7 @@ header.tavardt-header, header {
 <h1>Matriz Interativa de Ameaças a Sistemas de Inteligência Artificial</h1>
 <p>Mapeamento técnico de vetores de ataque em aplicações com Modelos de Linguagem (LLMs) e agentes autónomos. Avaliação de postura defensiva sob OWASP Top 10 for LLMs e MITRE ATLAS com geração automática de blueprint de mitigação.</p>
 </div>
-<!-- APPLICATION PROFILE SELECTOR (CHIPS) -->
+
 <div class="arch-bar">
 <span class="arch-bar-label">Perfil da Aplicação:</span>
 <button class="arch-chip active" data-arch="agent">🤖 Agentes &amp; MCP</button>
@@ -1551,7 +1585,7 @@ header.tavardt-header, header {
 <button class="arch-chip" data-arch="chat">💬 Chatbot / Assistente</button>
 <button class="arch-chip" data-arch="api">⚡ API / Direct LLM</button>
 </div>
-<!-- GLOBAL SCORE BAR (HORIZONTAL WITH PILLS) -->
+
 <div class="global-score-bar">
 <div class="score-left">
 <div class="score-big" id="stat-score">0 / 100</div>
@@ -1566,18 +1600,18 @@ header.tavardt-header, header {
 <div class="score-pill exp" id="pill-exp">Vulneráveis: 0 / 10</div>
 </div>
 </div>
-<!-- BALANCED 2X5 THREAT SCORECARD HEADING & GRID -->
+
 <h2 style="text-align: center; margin-bottom: 24px; font-size: 1.5rem; font-weight: 700; color: #ffffff;">
       Scorecard Simétrico de Vetores (Grade 2x5 Balanceada)
     </h2>
 <div class="grid-2x5" id="threat-list" style="margin-bottom: 28px;"></div>
-<!-- GENERATE BLUEPRINT BUTTON (MOVED BELOW THE 10 THREAT ITEMS - PRINT 2) -->
+
 <div style="display: flex; justify-content: center; margin-bottom: 32px;">
 <button class="btn-action-main" id="btn-generate-blueprint" style="width: 100%; max-width: 580px; font-size: 1rem; padding: 16px 36px;">
         Gerar Hardening Blueprint (Markdown)
       </button>
 </div>
-<!-- Hardening Blueprint Output Card (Initially Hidden) -->
+
 <div class="card" id="blueprint-card" style="display: none; margin-bottom: 32px; border-color: #1e00ff;">
 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; flex-wrap: wrap; gap: 12px;">
 <div class="card-title" style="margin: 0; font-size: 1.15rem; font-weight: 700; color: #ffffff;">Blueprint de Blindagem de IA (Markdown)</div>
@@ -1590,12 +1624,12 @@ header.tavardt-header, header {
 </div>
 </div>
 <div class="container">
-<!-- AEO CITABLE DEFINITION SECTION (100% WIDTH - 1200px) -->
+
 <section class="aeo-card">
 <h2>O que é a Matriz de Ameaças a Sistemas de IA?</h2>
 <p>A Matriz de Ameaças a Sistemas de IA da TAVARDT é uma plataforma analítica interativa que mapeia e correlaciona vetores de ataque adversariais conforme o OWASP Top 10 for Large Language Models, o NIST AI Risk Management Framework e a matriz MITRE ATLAS. A ferramenta permite diagnosticar posturas de risco corporativas e compilar matrizes defensivas completas.</p>
 </section>
-<!-- GEO TECHNICAL VECTORS SECTION (100% WIDTH - 1200px) -->
+
 <section class="vectors-section">
 <h2>Vetores de Risco &amp; Vulnerabilidades Auditadas</h2>
 <div class="vectors-grid">
@@ -1617,7 +1651,7 @@ header.tavardt-header, header {
 </div>
 </div>
 </section>
-<!-- AEO/GEO FAQ SECTION (100% WIDTH - EXACTLY 5 FAQS) -->
+
 <section class="faq-section">
 <h2>Perguntas Frequentes (FAQ) &amp; Diretrizes de Cibersegurança</h2>
 <details class="faq-item">
@@ -1641,7 +1675,7 @@ header.tavardt-header, header {
 <div class="faq-answer">A TAVARDT realiza modelagem de ameaças para IA, auditorias de segurança estáticas e dinâmicas, testes de invasão focados em LLMs e blindagem de infraestrutura com Cloudflare Zero Trust.</div>
 </details>
 </section>
-<!-- DEFENSIVE HARDENING CTA -->
+
 <div class="cta-card">
 <h3>Precisa Mitigar a Matriz de Riscos de IA na sua Empresa?</h3>
 <p>A consultoria especializada da TAVARDT realiza modelagem de ameaças, testes adversariais e implementação de defesas ativas para pipelines de IA.</p>
@@ -1656,7 +1690,6 @@ header.tavardt-header, header {
 <div class="tavardt-footer-col">
 <div class="tavardt-footer-logo">TAVARDT<span class="tavardt-brand-dot">.</span></div>
 <p class="tavardt-footer-mission">Transformamos negócios invisíveis em marcas reconhecidas e seguras no mercado digital.</p>
-
 </div>
 <div class="tavardt-footer-col">
 <div class="tavardt-footer-heading">Navegação Regional</div>
