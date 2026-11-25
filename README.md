@@ -52,7 +52,7 @@ python3 threat_matrix_evaluator.py -a agent -json
 ***
 
 ### Licença
-Distribuído sob a Licença MIT. Consulte o ficheiro [LICENSE](LICENSE) para obter detalhes completos.
+Distribuído sob a Licença MIT.
 
 ***
 
